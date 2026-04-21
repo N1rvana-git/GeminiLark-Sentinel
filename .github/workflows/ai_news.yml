@@ -1,0 +1,35 @@
+name: "🤖 AI 资讯先知 (09:40)"
+
+on:
+  schedule:
+    # GitHub Actions 使用 UTC 时间
+    # UTC 1:40 -> 北京时间早上 9:40
+    - cron: '40 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  daily-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Prepare Secrets
+        run: |
+          echo 'url="https://api.zetatechs.com"' >> .env
+          echo 'key="${{ secrets.GEMINI_API_KEY }}"' >> .env
+          echo 'Feishu_webhook="${{ secrets.FEISHU_WEBHOOK }}"' >> .env
+          
+      - name: Run 【AI咨询】
+        run: |
+          python AI咨询.py
