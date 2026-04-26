@@ -17,6 +17,7 @@ def load_env_config():
 config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
 FEISHU_WEBHOOK = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
+FEISHU_WEBHOOK_DYX = config.get("Feishu_webhook_DYX", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 genai.configure(
@@ -78,8 +79,8 @@ def generate_poetry_content():
 
 def send_poetry_to_feishu(markdown_content):
     """将结果发送到飞书"""
-    if not markdown_content or not FEISHU_WEBHOOK.startswith("http"):
-        print("🔕 没获取到内容或 Webhook 错误，取消发送。")
+    if not markdown_content:
+        print("🔕 没获取到内容，取消发送。")
         return
         
     print("🚀 正在发送每日诗意共赏飞书卡片...")
@@ -119,12 +120,16 @@ def send_poetry_to_feishu(markdown_content):
     }
     
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(FEISHU_WEBHOOK, json=payload, headers=headers)
     
-    if response.status_code == 200:
-        print("✅ 飞书通知 (每日诗意) 发送成功！")
-    else:
-        print(f"❌ 飞书发送失败: {response.text}")
+    webhooks = [FEISHU_WEBHOOK, FEISHU_WEBHOOK_DYX]
+    for webhook in webhooks:
+        if not webhook.startswith("http"):
+            continue
+        response = requests.post(webhook, json=payload, headers=headers)
+        if response.status_code == 200:
+            print(f"✅ 飞书通知 (每日诗意) 发送成功！({webhook[-10:]})")
+        else:
+            print(f"❌ 飞书发送失败 ({webhook[-10:]}): {response.text}")
 
 
 if __name__ == "__main__":
