@@ -28,7 +28,7 @@ jobs:
         run: |
           echo 'url="https://api.zetatechs.com"' >> .env
           echo 'key="${{ secrets.GEMINI_API_KEY }}"' >> .env
-          echo 'Feishu_webhook="${{ secrets.FEISHU_WEBHOOK }}"' >> .env
+          echo 'Feishu_webhook_JZP="${{ secrets.FEISHU_WEBHOOK }}"' >> .env
           
       - name: Run 【外媒科技新闻】
         run: |

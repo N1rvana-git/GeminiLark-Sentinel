@@ -17,7 +17,7 @@ def load_env_config():
 
 config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
-FEISHU_WEBHOOK = config.get("Feishu_webhook", "https://open.feishu.cn/")
+FEISHU_WEBHOOK = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 genai.configure(
