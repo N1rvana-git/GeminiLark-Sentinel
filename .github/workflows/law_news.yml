@@ -26,7 +26,7 @@ jobs:
       - name: Prepare Secrets
         run: |
           echo 'url="https://api.zetatechs.com"' >> .env
-          echo 'key="${{ secrets.KEY }}"' >> .env
+          echo 'key="${{ secrets.GEMINI_API_KEY }}"' >> .env
           echo 'Feishu_webhook_DYX="${{ secrets.FEISHU_WEBHOOK_DYX }}"' >> .env
           
       - name: Run 【每日法律资讯】
