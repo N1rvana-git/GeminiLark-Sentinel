@@ -17,7 +17,7 @@ def load_env_config():
 
 config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
-FEISHU_WEBHOOK = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
+FEISHU_WEBHOOK_JZP = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 genai.configure(
@@ -70,7 +70,7 @@ def generate_philosophy_card():
 
 def send_philosophy_to_feishu(markdown_content):
     """将结果发送到飞书交互式卡片"""
-    if not markdown_content or not FEISHU_WEBHOOK.startswith("http"):
+    if not markdown_content or not FEISHU_WEBHOOK_JZP.startswith("http"):
         print("🔕 Webhook 错误或今日生成为空，取消发送。")
         return
         
@@ -111,7 +111,7 @@ def send_philosophy_to_feishu(markdown_content):
     }
     
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(FEISHU_WEBHOOK, json=payload, headers=headers)
+    response = requests.post(FEISHU_WEBHOOK_JZP, json=payload, headers=headers)
     
     if response.status_code == 200:
         print("✅ 飞书通知 (哲学导读) 发送成功！")

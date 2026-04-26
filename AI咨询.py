@@ -19,7 +19,7 @@ def load_env_config():
 
 config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
-FEISHU_WEBHOOK = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
+FEISHU_WEBHOOK_JZP = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 # 根据代理服务器特性，往往需要走 HTTP(REST) 协议而不是原生的 gRPC
@@ -93,7 +93,7 @@ def summarize_with_gemini(news_text):
 
 def send_to_feishu(markdown_content):
     """将结果发送到飞书交互式卡片 (Interactive Card)"""
-    if markdown_content == "暂无新闻" or not FEISHU_WEBHOOK.startswith("http"):
+    if markdown_content == "暂无新闻" or not FEISHU_WEBHOOK_JZP.startswith("http"):
         print("🔕 今日暂无高价值新闻或Webhook错误，静默不打扰。")
         return
         
@@ -135,7 +135,7 @@ def send_to_feishu(markdown_content):
     }
     
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(FEISHU_WEBHOOK, json=payload, headers=headers)
+    response = requests.post(FEISHU_WEBHOOK_JZP, json=payload, headers=headers)
     
     if response.status_code == 200:
         print("✅ 飞书通知发送成功！")

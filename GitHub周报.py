@@ -17,7 +17,7 @@ def load_env_config():
 
 config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
-FEISHU_WEBHOOK = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
+FEISHU_WEBHOOK_JZP = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 genai.configure(
@@ -103,7 +103,7 @@ def process_github_trending():
 
 def send_trending_to_feishu(markdown_content):
     """将结果发送到飞书"""
-    if not markdown_content or "今日无相关项目" in markdown_content or not FEISHU_WEBHOOK.startswith("http"):
+    if not markdown_content or "今日无相关项目" in markdown_content or not FEISHU_WEBHOOK_JZP.startswith("http"):
         print("🔕 没找到相关高亮项目或 Webhook 错误，取消发送。")
         return
         
@@ -144,7 +144,7 @@ def send_trending_to_feishu(markdown_content):
     }
     
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(FEISHU_WEBHOOK, json=payload, headers=headers)
+    response = requests.post(FEISHU_WEBHOOK_JZP, json=payload, headers=headers)
     
     if response.status_code == 200:
         print("✅ 飞书通知 (GitHub 周报) 发送成功！")

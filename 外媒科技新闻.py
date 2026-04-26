@@ -19,7 +19,7 @@ def load_env_config():
 
 config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
-FEISHU_WEBHOOK = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
+FEISHU_WEBHOOK_JZP = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 # 初始化 Gemini API 客户端 (走 HTTP REST 适配代理)
@@ -115,7 +115,7 @@ def generate_english_reading_card(news_text):
 
 def send_tech_news_to_feishu(markdown_content):
     """将结果发送到飞书"""
-    if not markdown_content or "暂无新闻" in markdown_content or not FEISHU_WEBHOOK.startswith("http"):
+    if not markdown_content or "暂无新闻" in markdown_content or not FEISHU_WEBHOOK_JZP.startswith("http"):
         print("🔕 今日暂无外媒新闻或Webhook没准备好，不打扰。")
         return
         
@@ -156,7 +156,7 @@ def send_tech_news_to_feishu(markdown_content):
     }
     
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(FEISHU_WEBHOOK, json=payload, headers=headers)
+    response = requests.post(FEISHU_WEBHOOK_JZP, json=payload, headers=headers)
     
     if response.status_code == 200:
         print("✅ 飞书通知 (英文精读) 发送成功！")
