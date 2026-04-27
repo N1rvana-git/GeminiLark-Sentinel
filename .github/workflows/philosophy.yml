@@ -29,6 +29,7 @@ jobs:
           echo 'url="https://api.zetatechs.com"' >> .env
           echo 'key="${{ secrets.GEMINI_API_KEY }}"' >> .env
           echo 'Feishu_webhook_JZP="${{ secrets.FEISHU_WEBHOOK_JZP }}"' >> .env
+          echo 'Feishu_webhook_DYX="${{ secrets.FEISHU_WEBHOOK_DYX }}"' >> .env
           
       - name: Run 【每日哲学经典】
         run: |
