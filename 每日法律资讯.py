@@ -49,7 +49,7 @@ def search_news(query):
         print(f"RSS获取失败 ({query}): {e}")
         return ""
 
-def generate_legal_post(domestic_news, foreign_news):
+def generate_legal_post(domestic_news, foreign_news, cases_news):
     """调用 Gemini API 生成文案"""
     print("🧠 正在请 Gemini 整合法律知识与新闻...")
     prompt = f"""
@@ -59,6 +59,9 @@ def generate_legal_post(domestic_news, foreign_news):
     【国内法律/时事新闻】：
     {domestic_news}
     
+    【国内热点法律案件】：
+    {cases_news}
+    
     【国际/国外法律新闻】：
     {foreign_news}
 
@@ -66,8 +69,9 @@ def generate_legal_post(domestic_news, foreign_news):
     请生成一篇内容，严格包含以下部分：
     1. **打招呼语**：必须包含对“平常鑫”的称呼，加上一句激励人心的话语，语气要像一位关怀备至的导师或贴心的朋友。
     2. **法学知识点**：请结合法学原理、重要法条或者经典的法学理论（可以是民法、刑法、宪法、法理学等领域），写一个硬核且有价值的知识点，帮助法学生复习。必须真实客观。
-    3. **国内法律新闻**：从上方【国内法律/时事新闻】材料中挑出一个最重要的新闻进行简练概括（必须真实，不可生造。如果材料中没有，请说明今日无国内重点法律新闻）。
-    4. **国外法律新闻**：从上方【国际/国外法律新闻】材料中挑出一个最有价值的国际/国外法律或时政新闻进行简要概括和略微评析（必须真实，不可生造）。
+    3. **国内热门案例**：从上方【国内热点法律案件】材料中挑出一个最新发生的真实国内纠纷或判决案例。简述案情经过，并从法律适用或争议焦点的角度给出简短专业的评析（必须真实，不可生造）。
+    4. **国内法律动态**：从上方【国内法律/时事新闻】材料中挑出一个最重要的宏观新闻进行简练概括（如果材料中没有，请说明今日无国内重点法律动态）。
+    5. **国外法律新闻**：从上方【国际/国外法律新闻】材料中挑出一个最有价值的国际/国外法律或时政新闻进行简要概括和略微评析。
 
     输出格式必须为 Markdown（但不要包裹在```markdown 中）。
     """
@@ -135,6 +139,7 @@ def send_to_feishu(markdown_content):
 if __name__ == "__main__":
     domestic = search_news("国内 法律 OR 司法 OR 法治 OR 法院")
     foreign = search_news("国际法 OR 跨国诉讼 OR 国外法律 OR 美国最高法 OR 欧盟法")
-    final_content = generate_legal_post(domestic, foreign)
+    cases = search_news("国内 法院 (判决 OR 宣判 OR 庭审 OR 典型案例 OR 纠纷) -小说 -影视")
+    final_content = generate_legal_post(domestic, foreign, cases)
     if final_content:
         send_to_feishu(final_content)
