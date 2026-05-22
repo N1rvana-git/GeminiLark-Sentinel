@@ -24,7 +24,7 @@ genai.configure(
     transport="rest",
     client_options={"api_endpoint": BASE_URL}
 )
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def generate_interview_questions():
     """依靠大模型的能力，生成 4 道高频高质量的技术面试题"""

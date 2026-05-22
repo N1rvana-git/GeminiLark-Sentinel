@@ -25,7 +25,7 @@ genai.configure(
     transport="rest",
     client_options={"api_endpoint": BASE_URL}
 )
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def generate_poetry_content():
     """让大模型生成富有诗意的三句文案或诗词"""

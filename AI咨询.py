@@ -29,7 +29,7 @@ genai.configure(
     client_options={"api_endpoint": BASE_URL}
 )
 # 回退到兼容性最广的 flash 模型，你也可以换回预览版
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def search_latest_news():
     """使用免费且稳定的 Google News RSS 获取新闻"""

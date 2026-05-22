@@ -26,7 +26,7 @@ genai.configure(
     transport="rest",
     client_options={"api_endpoint": BASE_URL}
 )
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def generate_philosophy_card():
     """纯依靠大模型的能力，选择哲学段落进行精写导读"""

@@ -26,7 +26,7 @@ genai.configure(
     transport="rest",
     client_options={"api_endpoint": BASE_URL}
 )
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def search_news(query):
     """使用 Google News RSS 获取新闻"""

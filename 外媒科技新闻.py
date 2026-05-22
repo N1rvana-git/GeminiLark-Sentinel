@@ -29,7 +29,7 @@ genai.configure(
     client_options={"api_endpoint": BASE_URL}
 )
 # 仍然使用兼容你额度的免费版或 flash 预览版模型
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def search_foreign_tech_news():
     """搜寻国外知名媒体科技内容 (The Verge, TechCrunch, Wired 等)"""

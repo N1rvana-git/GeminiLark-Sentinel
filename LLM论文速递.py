@@ -25,7 +25,7 @@ genai.configure(
     transport="rest",
     client_options={"api_endpoint": BASE_URL}
 )
-model = genai.GenerativeModel('gemini-3-flash-preview-free')
+model = genai.GenerativeModel('gpt-5.4-free')
 
 def fetch_latest_arxiv_papers():
     """从 arXiv 官方 API 获取最新包含 LLM 推理优化的论文"""
