@@ -71,26 +71,29 @@ def generate_poetry_content():
 - 不要写"这句短得像一声轻叹，却留下很长的回响"这种空话
 - 直接说：好在哪里，或者它触碰到了什么
 
-【输出格式】（纯markdown，不要代码块）
+【输出格式】（纯markdown，不要代码块。三段之间严格用 "===" 单独一行分隔）
 
-### 一、[诗词标题] — [作者]
-> [内容]
+🏮 **一、[诗词标题] — [作者]**
 
-注：[一句话赏析]
+[诗词内容，每行直接换行，不要加 > 符号]
 
----
+· [一句话赏析]
 
-### 二、[篇目] — [作者]
-> [内容]
+===
 
-注：[一句话赏析]
+📖 **二、[篇目] — [作者]**
 
----
+[散文内容]
 
-### 三、[两个字的短标题]
-> [原创文案内容]
+· [一句话赏析]
 
-注：[一句话赏析]
+===
+
+🌙 **三、[两个字的短标题]**
+
+[原创文案内容]
+
+· [一句话赏析]
 """
     
     try:
@@ -119,20 +122,18 @@ def send_poetry_to_feishu(markdown_content):
                 "wide_screen_mode": True
             },
             "header": {
-                "template": "carmine", # 胭脂红色，充满文学与浪漫气息
+                "template": "violet", # 淡紫色，清冷克制
                 "title": {
                     "content": "今日三句",
                     "tag": "plain_text"
                 }
             },
             "elements": [
-                {
-                    "tag": "markdown",
-                    "content": markdown_content
-                },
-                {
-                    "tag": "hr"
-                },
+                *sum([
+                    [{"tag": "markdown", "content": part.strip()}, {"tag": "hr"}]
+                    for part in markdown_content.split("===")
+                    if part.strip()
+                ], [])[:-1],  # 去掉最后一个多余的 hr
                 {
                     "tag": "note",
                     "elements": [
