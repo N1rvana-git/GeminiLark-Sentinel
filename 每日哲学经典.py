@@ -19,6 +19,7 @@ config = load_env_config()
 GEMINI_API_KEY = config.get("key", "sk-xxx")
 FEISHU_WEBHOOK_JZP = config.get("Feishu_webhook_JZP", "https://open.feishu.cn/")
 FEISHU_WEBHOOK_DYX = config.get("Feishu_webhook_DYX", "https://open.feishu.cn/")
+FEISHU_WEBHOOK_QUNCI = config.get("Feishu_webhook_QUNCI", "https://open.feishu.cn/")
 BASE_URL = config.get("url", "https://api.zetatechs.com").replace("https://", "").replace("http://", "")
 
 genai.configure(
@@ -113,7 +114,7 @@ def send_philosophy_to_feishu(markdown_content):
     
     headers = {'Content-Type': 'application/json'}
     
-    webhooks = [FEISHU_WEBHOOK_JZP, FEISHU_WEBHOOK_DYX]
+    webhooks = [FEISHU_WEBHOOK_JZP, FEISHU_WEBHOOK_DYX, FEISHU_WEBHOOK_QUNCI]
     for webhook in webhooks:
         if not webhook.startswith("http"):
             continue
